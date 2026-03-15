@@ -5,7 +5,6 @@ class Applicant(Base):
     __tablename__ = "applicant_profiles"
 
     id = Column(Integer, primary_key=True, index=True)
-    phone_number = Column(Integer, unique=True, nullable=False)
-    cv_reference = Column(String, nullable=False)
-    portfolio_link = Column(String, nullable=True) 
-    experience_summary = Column(String, nullable=False)
+    phone_number = Column(String(20), unique=True, index=True, nullable=False)
+    cv_url = Column(String, nullable=False) 
+    experience_summary = Column(String(2000), nullable=False)
