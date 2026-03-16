@@ -17,6 +17,7 @@ class DocumentCreate(DocumentBase):
 class DocumentUpdate(BaseModel):
     file_url: Optional[HttpUrl] = None
     file_name: Optional[str] = Field(default=None, max_length=50)
+    file_size: Optional[int] = None
 
 # response schemas should only add fields not already defined in the base schema
 class DocumentResponse(DocumentBase):

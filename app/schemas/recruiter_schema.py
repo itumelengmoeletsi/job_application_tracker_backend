@@ -12,8 +12,8 @@ class RecruiterPermissionLevel(str, Enum):
     VIEWER = "viewer"
 
 class RecruiterBase(BaseModel):
-    department: str = Field(..., description="Department that recruiter works in.") 
-    job_title: str = Field(..., description="Recruiter's job title")
+    department: str = Field(..., description="Department that recruiter works in.", max_length=50) 
+    job_title: str = Field(..., description="Recruiter's job title", max_length=100)
     
 
 class RecruiterCreate(RecruiterBase):
@@ -24,7 +24,7 @@ class RecruiterUpdate(BaseModel):
     job_title: Optional[str] = Field(default=None, max_length=100)
     internal_notes: Optional[str] = Field(default=None, max_length=255)
 
-class DocumentResponse(RecruiterBase):
+class RecruiterResponse(RecruiterBase):
     id: int
     permission_level: RecruiterPermissionLevel
     internal_notes: Optional[str]

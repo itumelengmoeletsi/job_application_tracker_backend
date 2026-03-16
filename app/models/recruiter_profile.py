@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.sql import func
+from sqlalchemy import Enum
 from enum import Enum as PyEnum
 from app.database.database import Base
 
@@ -16,7 +17,7 @@ class Recruiter(Base):
     department = Column(String(50), nullable=False)
     job_title = Column(String(100), nullable=False)
     permission_level = Column(
-        PyEnum(RecruiterPermissionLevel),
+        Enum(RecruiterPermissionLevel),
         nullable=False,
         default=RecruiterPermissionLevel.RECRUITER
     )

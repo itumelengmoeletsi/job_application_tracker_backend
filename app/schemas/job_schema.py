@@ -1,13 +1,18 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
 from typing import Optional 
+from enum import Enum
+
+class JobStatus(str, Enum):
+    OPEN = "open"
+    CLOSED = "closed"
 
 # Base Schema
 # Shared fields between schemas
 
 class JobBase(BaseModel):               
     title: str = Field(..., max_length=255)
-    job_description: str
+    description: str
 
 # Creat Schema
 # Used when creating a job
@@ -20,7 +25,7 @@ class JobCreate(JobBase):
 
 class JobUpdate(BaseModel):
     title: Optional[str] = Field(default=None, max_length=255)
-    job_description: Optional[str] = None
+    description: Optional[str] = None
     status: Optional[str] = None
 
 # Response Schema

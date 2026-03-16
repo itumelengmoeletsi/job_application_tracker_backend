@@ -5,7 +5,7 @@ from app.database.database import Base
 class Document(Base):
     __tablename__ = "documents"
 
-    id = Column(Integer, primary_key=True, nullable=False)
+    id = Column(Integer, primary_key=True)
     applicant_id = Column(Integer, ForeignKey("applicant_profiles.id"), nullable=False)
     file_url = Column(String(255), nullable=False)
     file_name = Column(String(50), nullable=False)
