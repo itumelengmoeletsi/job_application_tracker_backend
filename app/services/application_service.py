@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import IntegrityError
 from app.models.application import Application
 from app.models.job import Job
 from app.schemas.application_schema import ApplicationCreate
@@ -21,15 +22,17 @@ def apply_to_job(db: Session, application_data: ApplicationCreate):
     # Create new application
     new_application = Application(
         job_id=application_data.job_id,
-        applicant_id=application_data.application_id,
-        status="applied"
+        applicant_id=application_data.applicant_id,
     )
 
     # Save to database 
     db.add(new_application)
     try:
         db.commit()
-    except Exception():
+    except IntegrityError:
+        db.rollback()
+        raise ValueError("Applicant has already applied to this job")
+    except Exception:
         db.rollback()
         raise
 

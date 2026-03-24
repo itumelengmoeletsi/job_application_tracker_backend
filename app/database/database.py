@@ -7,8 +7,16 @@ engine = create_engine(DATABASE_URL)
 
 SessionLocal = sessionmaker(
     autocommit=False,
-    autoflussh=False,
+    autoflush=False,
     bind=engine
 )
 
 Base = declarative_base()
+
+# Dependency used by FastAPI routes
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

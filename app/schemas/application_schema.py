@@ -1,6 +1,14 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
 from typing import Optional
+from enum import Enum
+
+class ApplicationStatus(str, Enum):
+    APPLIED = "applied"
+    UNDER_REVIEW = "under_review"
+    INTERVIEW = "interview"
+    OFFER = "offer"
+    REJECTED = "rejected"
 
 # ----------------------------------------
 # Application Creation Schema
@@ -20,20 +28,13 @@ class ApplicationCreate(BaseModel):
 
 
 # ---------------------------------------
-# Applicatino Status Update Schema
+# Application Status Update Schema
 # ---------------------------------------
 # Only recruiters should use this
 # It updates the workflow state of the application
 
 class ApplicationStatusUpdate(BaseModel):
-    status: str = Field(..., description="New workflow state for the application")
-
-    # Possible values might late include:
-    # applied 
-    # under_review
-    # interview
-    # offer
-    # rejected
+    status: Optional[str] = None
 
 # --------------------------------------
 # Application Response Schema
@@ -47,7 +48,7 @@ class ApplicationResponse(BaseModel):
     applicant_id: int
     status: str
     created_at: datetime
-    updated_at: datetime
+    last_updated_at: Optional[datetime] = None
 
     class Config:
         from_attributes = True

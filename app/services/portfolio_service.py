@@ -2,7 +2,16 @@ from sqlalchemy.orm import Session
 from app.models.portfolio_links import PortfolioLink
 from app.schemas.portfolio_schema import PortfolioLinkCreate, PortfolioLinkUpdate
 
+MAX_PORTFOLIO_LINKS = 5
+
 def create_portfolio_link(db: Session, portfolio_data: PortfolioLinkCreate):
+    existing_links = db.query(PortfolioLink).filter(
+        PortfolioLink.applicant_id == portfolio_data.applicant_id
+    ).count()
+
+    if existing_links >= MAX_PORTFOLIO_LINKS:
+        raise ValueError("Portfolio limit reacheed")
+
     new_portfolio_link = PortfolioLink(
         applicant_id=portfolio_data.applicant_id,
         url=str(portfolio_data.url),

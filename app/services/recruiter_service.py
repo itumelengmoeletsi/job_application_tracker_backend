@@ -7,7 +7,7 @@ def create_recruiter(db: Session, recruiter_data: RecruiterCreate):
     new_recruiter = Recruiter(
         department=recruiter_data.department,
         job_title=recruiter_data.job_title,
-        permission_level=recruiter_data.permission_level
+        permission_level=recruiter_data.permission_level.upper()
     )
 
     # Save to database

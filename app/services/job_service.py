@@ -8,7 +8,7 @@ def create_job(db: Session, job_data: JobCreate):
     new_job = Job(
         title=job_data.title,
         description=job_data.description,
-        status="open"
+        status="OPEN"
     )
 
     # Save to db
@@ -38,7 +38,7 @@ def update_job(db: Session, job_id: int, job_data: JobUpdate):
         job.description = job_data.description
     
     if job_data.status is not None:
-        job.status = job_data.status
+        job.status = job_data.status.upper()
 
         if job_data.status == "closed":
             job.closed_at = datetime.utcnow()

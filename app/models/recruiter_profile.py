@@ -17,7 +17,7 @@ class Recruiter(Base):
     department = Column(String(50), nullable=False)
     job_title = Column(String(100), nullable=False)
     permission_level = Column(
-        Enum(RecruiterPermissionLevel),
+        Enum(RecruiterPermissionLevel, native_enum=False),
         nullable=False,
         default=RecruiterPermissionLevel.RECRUITER
     )
